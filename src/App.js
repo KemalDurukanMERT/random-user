@@ -6,10 +6,26 @@ import age from "./assets/growing-up-man.svg"
 import map from "./assets/map.svg"
 import phone from "./assets/phone.svg"
 import password from "./assets/padlock.svg"
+import Footer from "./components/Footer"
+import axios from "axios";
+import { useEffect, useState } from 'react';
 
 const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
  
 function App() {
+
+  const [person, setPerson] = useState()
+
+  const getUser = async () => {
+    const response = await axios.get("https://randomuser.me/api/")
+    console.log(response.data.results[0])
+    setPerson(response.data.results[0])
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
   return (
     <main>
       <div className="block bcg-orange">
@@ -63,6 +79,9 @@ function App() {
             </tbody>
           </table>
         </div>
+      </div>
+      <div style={{display: "flex", justifyContent:'center'}}>
+        <Footer />
       </div>
     </main>
   );
